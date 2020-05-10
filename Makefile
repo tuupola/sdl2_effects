@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Iinclude -Icomponents/hagl/include -Icomponents/hagl_sdl2 -Icomponents/libfixmath/libfixmath -DNO_MENUCONFIG
+CFLAGS = -Wall -Iinclude -Icomponents/hagl/include -Icomponents/hagl_sdl2 -DNO_MENUCONFIG
 SDLFLAGS = $(shell sdl2-config --libs --cflags)
 
 src = $(wildcard src/*.c) \

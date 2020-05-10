@@ -31,7 +31,6 @@ SPDX-License-Identifier: MIT-0
 
 #include <hagl.h>
 #include <hagl_hal.h>
-#include <rgb565.h>
 #include <fps.h>
 
 #include "metaballs.h"
@@ -52,7 +51,6 @@ uint32_t fps_callback(uint32_t interval, void *param)
 
 int main()
 {
-    uint16_t color;
     uint32_t fps_delay = 2000; /* 0.5 fps */
 
     bool quit = false;
@@ -78,13 +76,9 @@ int main()
     settings.max.x = DISPLAY_WIDTH - 1;
     settings.max.y = DISPLAY_HEIGHT - 1;
 
-    /* TODO: fix color endianness in SDL2 HAL. */
-    color = rgb565(255, 255, 255);
-    settings.color[0] = (color>>8) | (color<<8);
-    color = rgb565(210, 210, 210);
-    settings.color[1] = (color>>8) | (color<<8);
-    color = rgb565(150, 150, 150);
-    settings.color[2] = (color>>8) | (color<<8);
+    settings.color[0] = hagl_color(0, 0, 0);
+    settings.color[1] = hagl_color(255, 255, 255);
+    settings.color[2] = hagl_color(0, 255, 0);
 
     metaballs_init(settings);
 
