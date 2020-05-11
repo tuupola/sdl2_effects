@@ -52,7 +52,7 @@ uint32_t fps_callback(uint32_t interval, void *param)
 int main()
 {
     uint32_t fps_delay = 2000; /* 0.5 fps */
-
+    uint8_t effect = 0;
     bool quit = false;
 
     SDL_Event event;
@@ -81,16 +81,26 @@ int main()
     settings.color[2] = hagl_color(0, 255, 0);
 
     metaballs_init(settings);
+    plasma_init();
 
     printf("\nPress ESC to quit.\n\n");
 
     while (!quit) {
         hagl_clear_screen();
 
-        metaballs_animate();
-        metaballs_render();
+        switch(effect) {
+        case 0:
+            metaballs_animate();
+            metaballs_render();
+            break;
+        case 1:
+            plasma_animate();
+            plasma_render();
+            break;
+        }
 
         hagl_flush();
+        //SDL_Delay(100);
         current_fps = fps();
 
         if (SDL_PollEvent(&event)) {
@@ -102,6 +112,7 @@ int main()
                     quit = true;
                 } else {
                     hagl_clear_screen();
+                    effect = (effect + 1) % 2;
                 }
             }
         }
