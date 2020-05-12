@@ -36,6 +36,7 @@ SPDX-License-Identifier: MIT-0
 #include "metaballs.h"
 #include "plasma.h"
 #include "rgbplasma.h"
+#include "rotozoom.h"
 
 float current_fps = 0;
 
@@ -62,7 +63,8 @@ int main()
     metaballs_init();
     plasma_init();
 
-    printf("\nPress ESC to quit.\n\n");
+    printf("\nPress space for next demo.\n");
+    printf("Press ESC to quit.\n\n");
 
     while (!quit) {
         hagl_clear_screen();
@@ -80,6 +82,10 @@ int main()
             rgbplasma_animate();
             rgbplasma_render();
             break;
+        case 3:
+            rotozoom_animate();
+            rotozoom_render();
+            break;
         }
 
         hagl_flush();
@@ -95,7 +101,7 @@ int main()
                     quit = true;
                 } else {
                     hagl_clear_screen();
-                    effect = (effect + 1) % 3;
+                    effect = (effect + 1) % 4;
                 }
             }
         }
