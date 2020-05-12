@@ -35,6 +35,7 @@ SPDX-License-Identifier: MIT-0
 
 #include "metaballs.h"
 #include "plasma.h"
+#include "rgbplasma.h"
 
 float current_fps = 0;
 
@@ -75,6 +76,10 @@ int main()
             plasma_animate();
             plasma_render();
             break;
+        case 2:
+            rgbplasma_animate();
+            rgbplasma_render();
+            break;
         }
 
         hagl_flush();
@@ -90,7 +95,7 @@ int main()
                     quit = true;
                 } else {
                     hagl_clear_screen();
-                    effect = (effect + 1) % 2;
+                    effect = (effect + 1) % 3;
                 }
             }
         }
