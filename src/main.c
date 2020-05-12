@@ -34,12 +34,7 @@ SPDX-License-Identifier: MIT-0
 #include <fps.h>
 
 #include "metaballs.h"
-
-const int NUM_BALLS = 10;
-const int MIN_VELOCITY = 1;
-const int MAX_VELOCITY = 5;
-const int MIN_RADIUS = 10;
-const int MAX_RADIUS = 20;
+#include "plasma.h"
 
 float current_fps = 0;
 
@@ -63,24 +58,7 @@ int main()
 
     fps_id = SDL_AddTimer(fps_delay, fps_callback, &current_fps);
 
-    /* Settings for metaballs. */
-    struct settings settings;
-
-    settings.num = NUM_BALLS;
-    settings.velocity.min = MIN_VELOCITY;
-    settings.velocity.max = MAX_VELOCITY;
-    settings.radius.min = MIN_RADIUS;
-    settings.radius.max = MAX_RADIUS;
-    settings.min.x = 0;
-    settings.min.y = 0;
-    settings.max.x = DISPLAY_WIDTH - 1;
-    settings.max.y = DISPLAY_HEIGHT - 1;
-
-    settings.color[0] = hagl_color(0, 0, 0);
-    settings.color[1] = hagl_color(255, 255, 255);
-    settings.color[2] = hagl_color(0, 255, 0);
-
-    metaballs_init(settings);
+    metaballs_init();
     plasma_init();
 
     printf("\nPress ESC to quit.\n\n");
