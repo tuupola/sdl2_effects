@@ -41,8 +41,8 @@ void plasma_init()
     for(int i = 0; i < 256; i++) {
         uint8_t r, g, b;
 
-        r = 128.0 + 128 * sin(3.1415 * i / 128.0);
-        g = 128.0 + 128 * sin(3.1415 * i / 64.0);
+        r = 128.0 + 128.0 * sin((M_PI * i / 128.0) + 1);
+        g = 128.0 + 128.0 * sin((M_PI * i / 64.0) + 1);
         b = 64;
         palette[i] = hagl_color(r, g, b);
     }
