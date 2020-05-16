@@ -62,6 +62,7 @@ int main()
 
     metaballs_init();
     plasma_init();
+    rotozoom_init();
 
     printf("\nPress space for next demo.\n");
     printf("Press ESC to quit.\n\n");

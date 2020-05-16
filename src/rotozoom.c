@@ -30,24 +30,40 @@ SPDX-License-Identifier: MIT-0
 
 #include "head.h"
 
-static const uint8_t ROTOZOOM_SPEED = 1;
+static const uint8_t SPEED = 1;
+static const uint8_t STEP = 1;
+
 static uint16_t angle;
+static float sinlut[360];
+static float coslut[360];
+
+void rotozoom_init()
+{
+    /* Generate look up tables. */
+    for (uint16_t i = 0; i < 360; i++) {
+        sinlut[i] = sin(i * M_PI / 180);
+        coslut[i] = cos(i * M_PI / 180);
+    }
+}
 
 void rotozoom_render()
 {
     float s, c, z;
 
-    s = sin(angle * M_PI / 180);
-    c = cos(angle * M_PI / 180);
+    // s = sin(angle * M_PI / 180);
+    // c = cos(angle * M_PI / 180);
+    s = sinlut[angle];
+    c = coslut[angle];
     z = s * 1.2;
 
-    for (uint16_t x = 0; x < DISPLAY_WIDTH; x++) {
-        for (uint16_t y = 0; y < DISPLAY_HEIGHT; y++) {
+    for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
+        for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
 
+            /* Get a rotated pixel from the head image. */
             uint8_t u = (uint8_t)((x * c - y * s) * z) % HEAD_WIDTH;
             uint8_t v = (uint8_t)((x * s + y * c) * z) % HEAD_HEIGHT;
-
             color_t *color = (color_t*) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
+
             hagl_put_pixel(x, y, *color);
         }
     }
@@ -55,5 +71,5 @@ void rotozoom_render()
 
 void rotozoom_animate()
 {
-    angle = (angle + ROTOZOOM_SPEED) % 360;
+    angle = (angle + SPEED) % 360;
 }
