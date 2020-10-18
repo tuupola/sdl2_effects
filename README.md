@@ -5,7 +5,8 @@ Created to test the [HAGL graphics library](https://github.com/tuupola/hagl). Yo
 ![2nd Reality](https://appelsiini.net/img/2020/hagl_rotozoom.png)
 
 ```
-$ brew install sdl2
+$ brew install sdl2 # macOs
+$ sudo apt-get install libsdl2-dev # Debian based distros
 ```
 
 ```
