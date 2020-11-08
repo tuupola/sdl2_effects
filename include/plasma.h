@@ -24,6 +24,6 @@ SOFTWARE.
 SPDX-License-Identifier: MIT-0
 
 */
+
 void plasma_init();
-void plasma_animate();
 void plasma_render();

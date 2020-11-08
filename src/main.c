@@ -61,22 +61,19 @@ int main()
     fps_id = SDL_AddTimer(fps_delay, fps_callback, &current_fps);
 
     metaballs_init();
-    plasma_init();
+    //plasma_init();
     rotozoom_init();
 
     printf("\nPress space for next demo.\n");
     printf("Press ESC to quit.\n\n");
 
     while (!quit) {
-        hagl_clear_screen();
-
         switch(effect) {
         case 0:
             metaballs_animate();
             metaballs_render();
             break;
         case 1:
-            plasma_animate();
             plasma_render();
             break;
         case 2:
@@ -103,6 +100,11 @@ int main()
                 } else {
                     hagl_clear_screen();
                     effect = (effect + 1) % 4;
+
+                    /* Plasma is special. */
+                    if (1 == effect) {
+                        plasma_init();
+                    }
                 }
             }
         }
