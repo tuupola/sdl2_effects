@@ -25,6 +25,7 @@ SPDX-License-Identifier: MIT-0
 
 */
 
+#include <stdlib.h>
 #include <math.h>
 #include <hagl.h>
 
@@ -34,8 +35,8 @@ static const uint8_t SPEED = 1;
 static const uint8_t STEP = 1;
 
 static uint16_t angle;
-static float sinlut[360];
-static float coslut[360];
+// static float sinlut[360];
+// static float coslut[360];
 
 void rotozoom_init()
 {
