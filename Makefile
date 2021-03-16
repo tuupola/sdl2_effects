@@ -1,11 +1,11 @@
 CC = gcc
-CFLAGS = -Wall -Ilib/hagl/include -Ilib/hagl_sdl2 -DNO_MENUCONFIG
+CFLAGS = -Wall -Iexternal/hagl/include -Iexternal/hagl_sdl2 -DNO_MENUCONFIG
 LDFLAGS = -lm
 SDLFLAGS = $(shell sdl2-config --libs --cflags)
 
 src = $(wildcard *.c) \
-      $(wildcard lib/hagl/src/*.c) \
-      $(wildcard lib/hagl_sdl2/hagl_hal.c)
+      $(wildcard external/hagl/src/*.c) \
+      $(wildcard external/hagl_sdl2/hagl_hal.c)
 
 obj = $(src:.c=.o)
 
