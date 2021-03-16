@@ -31,6 +31,7 @@ SPDX-License-Identifier: MIT-0
 
 #include <hagl.h>
 #include <hagl_hal.h>
+#include <aps.h>
 #include <fps.h>
 
 #include "metaballs.h"
@@ -38,18 +39,26 @@ SPDX-License-Identifier: MIT-0
 #include "rgbplasma.h"
 #include "rotozoom.h"
 
-float current_fps = 0;
+typedef struct stats {
+    float fps;
+    float bps;
+} stats_t;
 
-uint32_t fps_callback(uint32_t interval, void *param)
+static stats_t stats;
+
+uint32_t stats_callback(uint32_t interval, void *param)
 {
-    printf("%.*f FPS\n", 1, *(float *)param);
+    stats_t *data = (stats_t *)param;
+    printf("%.*f fps / %.*f kBps\n", 1, data->fps, 1, data->bps / 1000);
+
     return interval;
 }
 
 int main()
 {
-    uint32_t fps_delay = 2000; /* 0.5 fps */
+    uint32_t stats_delay = 2000; /* 0.5 fps */
     uint8_t effect = 0;
+    size_t bytes = 0;
     bool quit = false;
 
     SDL_Event event;
@@ -58,7 +67,7 @@ int main()
     srand(time(0));
     hagl_init();
 
-    fps_id = SDL_AddTimer(fps_delay, fps_callback, &current_fps);
+    fps_id = SDL_AddTimer(stats_delay, stats_callback, &stats);
 
     printf("\nPress space for next demo.\n");
     printf("Press ESC to quit.\n\n");
@@ -82,9 +91,10 @@ int main()
             break;
         }
 
-        hagl_flush();
+        bytes = hagl_flush();
         //SDL_Delay(100);
-        current_fps = fps();
+        stats.bps = aps(bytes);
+        stats.fps = fps();
 
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -95,6 +105,7 @@ int main()
                     quit = true;
                 } else {
                     hagl_clear_screen();
+                    aps(APS_RESET);
                     effect = (effect + 1) % 4;
 
                     switch(effect) {
