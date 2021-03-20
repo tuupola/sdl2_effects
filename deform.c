@@ -29,6 +29,7 @@ SPDX-License-Identifier: MIT-0
 */
 
 #include <stdint.h>
+#include <stdlib.h>
 #include <math.h>
 #include <hagl.h>
 
@@ -38,11 +39,13 @@ SPDX-License-Identifier: MIT-0
 static const uint8_t SPEED = 1;
 static uint32_t step;
 
-static int8_t lut[DISPLAY_HEIGHT * DISPLAY_WIDTH * 2];
+int8_t *lut;
 
 void deform_init()
 {
-    int k = 0;
+    /* Allocate memory for lut and store address also to ptr. */
+    int8_t *ptr = lut = malloc(DISPLAY_HEIGHT * DISPLAY_WIDTH * 2 * sizeof(int8_t));
+
     for (uint16_t j = 0; j < DISPLAY_HEIGHT; j++) {
         for (uint16_t i = 0; i < DISPLAY_WIDTH; i++) {
 
@@ -82,28 +85,31 @@ void deform_init()
             // float u = x;
             // float v = y;
 
+            /* Target x and y coordinates in the texture. */
             int8_t tx = ((int8_t)(HEAD_WIDTH * u)) % HEAD_WIDTH;
             int8_t ty = ((int8_t)(HEAD_HEIGHT * v)) % HEAD_HEIGHT;
-            //printf("%f,%f -> %d,%d\n", u, v, tx, ty);
 
-            lut[k++] = tx;
-            lut[k++] = ty;
+            *(ptr++) = tx;
+            *(ptr++) = ty;
         }
     }
 }
 
 void deform_render()
 {
+    int8_t *ptr = lut;
+
     for (uint16_t y = 0; y < DISPLAY_HEIGHT; y++) {
         for (uint16_t x = 0; x < DISPLAY_WIDTH; x++) {
 
-            int32_t o = DISPLAY_WIDTH * y + x;
-            int16_t u = lut[2 * o + 0] + step;
-            int16_t v = lut[2 * o + 1] + step;
+            /* Retrieve texture x and y coordinates for display coordinates. */
+            int16_t u = *(ptr++) + step;
+            int16_t v = *(ptr++) + step;
 
             u = abs(u) % HEAD_WIDTH;
             v = abs(v) % HEAD_HEIGHT;
 
+            /* Get the pixel from texture and put it to the screen. */
             color_t *color = (color_t*) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
             hagl_put_pixel(x, y, *color);
         }
@@ -113,4 +119,9 @@ void deform_render()
 void deform_animate()
 {
     step = step + SPEED;
+}
+
+void deform_close()
+{
+    free(lut);
 }
