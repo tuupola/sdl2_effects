@@ -36,8 +36,9 @@ SPDX-License-Identifier: MIT-0
 #include "head.h"
 #include "deform.h"
 
-static const uint8_t SPEED = 1;
-static uint32_t step;
+static const uint8_t SPEED = 2;
+static const uint8_t PIXEL_SIZE = 1;
+static uint32_t frame;
 
 int8_t *lut;
 
@@ -46,8 +47,8 @@ void deform_init()
     /* Allocate memory for lut and store address also to ptr. */
     int8_t *ptr = lut = malloc(DISPLAY_HEIGHT * DISPLAY_WIDTH * 2 * sizeof(int8_t));
 
-    for (uint16_t j = 0; j < DISPLAY_HEIGHT; j++) {
-        for (uint16_t i = 0; i < DISPLAY_WIDTH; i++) {
+    for (uint16_t j = 0; j < DISPLAY_HEIGHT; j += PIXEL_SIZE) {
+        for (uint16_t i = 0; i < DISPLAY_WIDTH; i += PIXEL_SIZE) {
 
             const float x = -1.00f + 2.00f * (float)i / (float)DISPLAY_WIDTH;
             const float y = -1.00f + 2.00f * (float)j / (float)DISPLAY_HEIGHT;
@@ -99,26 +100,31 @@ void deform_render()
 {
     int8_t *ptr = lut;
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y++) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x++) {
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x += PIXEL_SIZE) {
 
             /* Retrieve texture x and y coordinates for display coordinates. */
-            int16_t u = *(ptr++) + step;
-            int16_t v = *(ptr++) + step;
+            int16_t u = *(ptr++) + frame;
+            int16_t v = *(ptr++) + frame;
 
             u = abs(u) % HEAD_WIDTH;
             v = abs(v) % HEAD_HEIGHT;
 
             /* Get the pixel from texture and put it to the screen. */
             color_t *color = (color_t*) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
-            hagl_put_pixel(x, y, *color);
+
+            if (1 == PIXEL_SIZE) {
+                hagl_put_pixel(x, y, *color);
+            } else {
+                hagl_fill_rectangle(x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, *color);
+            }
         }
     }
 }
 
 void deform_animate()
 {
-    step = step + SPEED;
+    frame = frame + SPEED;
 }
 
 void deform_close()

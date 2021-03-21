@@ -28,3 +28,4 @@ SPDX-License-Identifier: MIT-0
 void deform_init();
 void deform_render();
 void deform_animate();
+void deform_close();
