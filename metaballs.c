@@ -50,7 +50,7 @@ static const uint8_t MIN_VELOCITY = 3;
 static const uint8_t MAX_VELOCITY = 5;
 static const uint8_t MIN_RADIUS = 20;
 static const uint8_t MAX_RADIUS = 30;
-static const uint8_t STEP = 1;
+static const uint8_t PIXEL_SIZE = 1;
 
 void metaballs_init()
 {
@@ -90,9 +90,10 @@ void metaballs_render()
     color_t black = hagl_color(0, 0, 0);
     color_t white = hagl_color(255, 255, 255);
     color_t green = hagl_color(0, 255, 0);
+    color_t color;
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x += PIXEL_SIZE) {
             float sum = 0;
             for (uint8_t i = 0; i < NUM_BALLS; i++) {
                 float dx = x - balls[i].position.x;
@@ -103,13 +104,19 @@ void metaballs_render()
             }
 
             if (sum > 0.65) {
-                hagl_put_pixel(x, y, black);
+                color = black;
             } else if (sum > 0.5) {
-                hagl_put_pixel(x, y, white);
+                color = white;
             } else if (sum > 0.4) {
-                hagl_put_pixel(x, y, green);
+                color = green;
             } else {
-                hagl_put_pixel(x, y, background);
+                color = background;
+            }
+
+            if (1 == PIXEL_SIZE) {
+                hagl_put_pixel(x, y, color);
+            } else {
+                hagl_fill_rectangle(x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
             }
         }
     }
