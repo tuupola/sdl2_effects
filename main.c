@@ -38,6 +38,7 @@ SPDX-License-Identifier: MIT-0
 #include "plasma.h"
 #include "rgbplasma.h"
 #include "rotozoom.h"
+#include "deform.h"
 
 typedef struct stats {
     float fps;
@@ -83,11 +84,16 @@ int main()
             metaballs_render();
             break;
         case 2:
+            plasma_animate();
             plasma_render();
             break;
         case 3:
             rotozoom_animate();
             rotozoom_render();
+            break;
+        case 4:
+            deform_animate();
+            deform_render();
             break;
         }
 
@@ -104,9 +110,28 @@ int main()
                 if (SDLK_ESCAPE ==event.key.keysym.sym) {
                     quit = true;
                 } else {
+
                     hagl_clear_screen();
-                    aps(APS_RESET);
-                    effect = (effect + 1) % 4;
+
+                    switch(effect) {
+                    case 0:
+                        //rgbplasma_close();
+                        break;
+                    case 1:
+                        //metaballs_close();
+                        break;
+                    case 2:
+                        plasma_close();
+                        break;
+                    case 3:
+                        //rotozoom_close();
+                        break;
+                    case 4:
+                        deform_close();
+                        break;
+                    }
+
+                    effect = (effect + 1) % 5;
 
                     switch(effect) {
                     case 0:
@@ -121,7 +146,12 @@ int main()
                     case 3:
                         rotozoom_init();
                         break;
+                    case 4:
+                        deform_init();
+                        break;
                     }
+
+                    aps(APS_RESET);
 
                 }
             }
