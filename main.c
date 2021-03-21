@@ -84,6 +84,7 @@ int main()
             metaballs_render();
             break;
         case 2:
+            plasma_animate();
             plasma_render();
             break;
         case 3:
@@ -116,6 +117,7 @@ int main()
                     switch(effect) {
                     case 0:
                         //rgbplasma_init();
+                        deform_close();
                         break;
                     case 1:
                         metaballs_init();
@@ -124,6 +126,7 @@ int main()
                         plasma_init();
                         break;
                     case 3:
+                        plasma_close();
                         rotozoom_init();
                         break;
                     case 4:
