@@ -40,7 +40,7 @@ static const uint8_t STEP = 1;
 
 void plasma_init()
 {
-    plasma = malloc(DISPLAY_WIDTH * DISPLAY_HEIGHT * sizeof(uint8_t));
+    uint8_t *ptr = plasma = malloc(DISPLAY_WIDTH * DISPLAY_HEIGHT * sizeof(uint8_t));
     palette = malloc(256 * sizeof(color_t));
 
     /* Generate nice continous palette. */
@@ -52,28 +52,29 @@ void plasma_init()
         palette[i] = hagl_color(r, g, b);
     }
 
-    for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
-        for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
                 /* Generate three different sinusoids. */
                 float v1 = 128.0 + (128.0 * sin(x / 32.0));
                 float v2 = 128.0 + (128.0 * sin(y / 24.0));
                 float v3 = 128.0 + (128.0 * sin(sqrt(x * x + y * y) / 24.0));
                 /* Calculate average of the three sinusoids */
-                /* and use it as color. */
+                /* and use it as color index. */
                 uint8_t color = (v1 + v2 + v3) / 3;
-                uint8_t *ptr = (plasma + DISPLAY_WIDTH * y + x);
-                 *ptr = color;
+                *(ptr++) = color;
         }
     }
 }
 
 void plasma_render()
 {
-    for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
-        for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
-            /* Get a pixel from the plasma buffer. */
-            uint8_t *ptr = (plasma + x + DISPLAY_WIDTH * y);
-            color_t color = palette[*ptr];
+    uint8_t *ptr = plasma;
+
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
+            /* Get a color for pixel from the plasma buffer. */
+            uint8_t index = *(ptr++);
+            color_t color = palette[index];
             /* Put a pixel to the display. */
             if (1 == STEP) {
                 hagl_put_pixel(x, y, color);
@@ -86,16 +87,16 @@ void plasma_render()
 
 void plasma_animate()
 {
-    for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
-        for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
+    uint8_t *ptr = plasma;
+
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
                 /* Get a pixel from the plasma buffer. */
-                uint8_t *ptr = (plasma + x + DISPLAY_WIDTH * y);
-                uint8_t color = *ptr;
+                uint8_t index = *ptr;
                 /* Choose next color from the palette. */
-                color += SPEED;
-                color %= 256;
+                index = (index + SPEED) % 256;
                 /* Put a pixel to the plasma buffer. */
-                *ptr = color;
+                *(ptr++) = index;
         }
     }
 }
