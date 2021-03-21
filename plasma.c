@@ -36,7 +36,7 @@ color_t *palette;
 uint8_t *plasma;
 
 static const uint8_t SPEED = 4;
-static const uint8_t STEP = 1;
+static const uint8_t PIXEL_SIZE = 1;
 
 void plasma_init()
 {
@@ -52,8 +52,8 @@ void plasma_init()
         palette[i] = hagl_color(r, g, b);
     }
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x += PIXEL_SIZE) {
                 /* Generate three different sinusoids. */
                 float v1 = 128.0 + (128.0 * sin(x / 32.0));
                 float v2 = 128.0 + (128.0 * sin(y / 24.0));
@@ -70,16 +70,16 @@ void plasma_render()
 {
     uint8_t *ptr = plasma;
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + PIXEL_SIZE) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + PIXEL_SIZE) {
             /* Get a color for pixel from the plasma buffer. */
             uint8_t index = *(ptr++);
             color_t color = palette[index];
             /* Put a pixel to the display. */
-            if (1 == STEP) {
+            if (1 == PIXEL_SIZE) {
                 hagl_put_pixel(x, y, color);
             } else {
-                hagl_fill_rectangle(x, y, x + STEP - 1, y + STEP - 1, color);
+                hagl_fill_rectangle(x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
             }
         }
     }
@@ -89,8 +89,8 @@ void plasma_animate()
 {
     uint8_t *ptr = plasma;
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
+    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + PIXEL_SIZE) {
+        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + PIXEL_SIZE) {
                 /* Get a pixel from the plasma buffer. */
                 uint8_t index = *ptr;
                 /* Choose next color from the palette. */
