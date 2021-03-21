@@ -110,14 +110,32 @@ int main()
                 if (SDLK_ESCAPE ==event.key.keysym.sym) {
                     quit = true;
                 } else {
+
                     hagl_clear_screen();
-                    aps(APS_RESET);
+
+                    switch(effect) {
+                    case 0:
+                        //rgbplasma_close();
+                        break;
+                    case 1:
+                        //metaballs_close();
+                        break;
+                    case 2:
+                        plasma_close();
+                        break;
+                    case 3:
+                        //rotozoom_close();
+                        break;
+                    case 4:
+                        deform_close();
+                        break;
+                    }
+
                     effect = (effect + 1) % 5;
 
                     switch(effect) {
                     case 0:
                         //rgbplasma_init();
-                        deform_close();
                         break;
                     case 1:
                         metaballs_init();
@@ -126,13 +144,14 @@ int main()
                         plasma_init();
                         break;
                     case 3:
-                        plasma_close();
                         rotozoom_init();
                         break;
                     case 4:
                         deform_init();
                         break;
                     }
+
+                    aps(APS_RESET);
 
                 }
             }
