@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Iexternal/hagl/include -Iexternal/hagl_sdl2 -DNO_MENUCONFIG
+CFLAGS = -Wall -Iexternal/hagl/include -Iexternal/hagl_sdl2
 LDFLAGS = -lm
 SDLFLAGS = $(shell sdl2-config --libs --cflags)
 
