@@ -1,6 +1,6 @@
 [submodule "components/hagl"]
 	path = external/hagl
-	url = git@github.com:tuupola/hagl.git
+	url = https://github.com/tuupola/hagl.git
 [submodule "components/hagl_sdl2"]
 	path = external/hagl_sdl2
-	url = git@github.com:tuupola/hagl_sdl2.git
+	url = https://github.com/tuupola/hagl_sdl2.git
