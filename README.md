@@ -6,6 +6,7 @@ Created to test the [HAGL graphics library](https://github.com/tuupola/hagl). Yo
 
 ```
 $ brew install sdl2 # macOs
+$ sudo dnf install SDL2-devel # Fedora, Rocky etc
 $ sudo apt-get install libsdl2-dev # Debian based distros
 ```
 
@@ -19,4 +20,3 @@ $ ./demo
 ## Run on ESP32
 
 HAGL is hardware agnostic. You can run the demos also [ESP32 based boards](https://github.com/tuupola/esp_effects).
-
