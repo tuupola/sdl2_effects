@@ -47,6 +47,8 @@ typedef struct stats {
 
 static stats_t stats;
 
+static const uint64_t MS_PER_FRAME_100_FPS = 1000 / 100;
+
 uint32_t stats_callback(uint32_t interval, void *param)
 {
     stats_t *data = (stats_t *)param;
@@ -74,6 +76,9 @@ int main()
     printf("Press ESC to quit.\n\n");
 
     while (!quit) {
+
+        uint32_t start = SDL_GetTicks();
+
         switch(effect) {
         case 0:
             rgbplasma_animate();
@@ -98,7 +103,14 @@ int main()
         }
 
         bytes = hagl_flush();
-        //SDL_Delay(100);
+
+        uint32_t end = SDL_GetTicks();
+        int32_t delay = MS_PER_FRAME_100_FPS - (end - start);
+
+        if (delay > 0) {
+            SDL_Delay(delay);
+        }
+
         stats.bps = aps(bytes);
         stats.fps = fps();
 
