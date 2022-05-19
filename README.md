@@ -11,7 +11,7 @@ $ sudo apt-get install libsdl2-dev # Debian based distros
 ```
 
 ```
-$ git clone git@github.com:tuupola/sdl2_effects.git --recursive
+$ git clone https://github.com/tuupola/sdl2_effects.git --recursive
 $ cd sdl2_effects
 $ make clean && make
 $ ./demo
