@@ -60,7 +60,7 @@ uint32_t stats_callback(uint32_t interval, void *param)
 int main()
 {
     uint32_t stats_delay = 2000; /* 0.5 fps */
-    uint8_t effect = 0;
+    uint8_t effect = 3;
     size_t bytes = 0;
     bool quit = false;
 
@@ -68,7 +68,7 @@ int main()
     SDL_TimerID fps_id;
 
     srand(time(0));
-    hagl_init();
+    hagl_backend_t *backend = hagl_init();
 
     fps_id = SDL_AddTimer(stats_delay, stats_callback, &stats);
 
@@ -82,27 +82,27 @@ int main()
         switch(effect) {
         case 0:
             rgbplasma_animate();
-            rgbplasma_render();
+            rgbplasma_render(backend);
             break;
         case 1:
             metaballs_animate();
-            metaballs_render();
+            metaballs_render(backend);
             break;
         case 2:
             plasma_animate();
-            plasma_render();
+            plasma_render(backend);
             break;
         case 3:
             rotozoom_animate();
-            rotozoom_render();
+            rotozoom_render(backend);
             break;
         case 4:
             deform_animate();
-            deform_render();
+            deform_render(backend);
             break;
         }
 
-        bytes = hagl_flush();
+        bytes = hagl_flush(backend);
 
         uint32_t end = SDL_GetTicks();
         int32_t delay = MS_PER_FRAME_100_FPS - (end - start);
@@ -123,7 +123,7 @@ int main()
                     quit = true;
                 } else {
 
-                    hagl_clear_screen();
+                    hagl_clear_screen(backend);
 
                     switch(effect) {
                     case 0:
@@ -171,7 +171,7 @@ int main()
     }
 
     SDL_RemoveTimer(fps_id);
-    hagl_close();
+    hagl_close(backend);
 
     return 0;
 }
