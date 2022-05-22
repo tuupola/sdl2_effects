@@ -39,18 +39,18 @@ uint8_t *plasma;
 static const uint8_t SPEED = 4;
 static const uint8_t PIXEL_SIZE = 1;
 
-void plasma_init(hagl_backend_t *backend)
+void plasma_init(hagl_surface_t *surface)
 {
     uint8_t *ptr = plasma = malloc(DISPLAY_WIDTH * DISPLAY_HEIGHT * sizeof(uint8_t));
     palette = malloc(256 * sizeof(color_t));
 
     /* Generate nice continous palette. */
-    for(int i = 0; i < 250; i++) {
+    for(int i = 0; i < 256; i++) {
         uint8_t r, g, b;
         r = 128.0 + 128.0 * sin((M_PI * i / 128.0) + 1);
         g = 128.0 + 128.0 * sin((M_PI * i / 64.0) + 1);
         b = 64;
-        // palette[i] = hagl_color(backend, r, g, b);
+        palette[i] = hagl_color(surface, r, g, b);
     }
 
     for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
@@ -67,7 +67,7 @@ void plasma_init(hagl_backend_t *backend)
     }
 }
 
-void plasma_render(hagl_backend_t *backend)
+void plasma_render(hagl_surface_t *surface)
 {
     uint8_t *ptr = plasma;
 
@@ -78,9 +78,9 @@ void plasma_render(hagl_backend_t *backend)
             color_t color = palette[index];
             /* Put a pixel to the display. */
             if (1 == PIXEL_SIZE) {
-                hagl_put_pixel(backend, x, y, color);
+                hagl_put_pixel(surface, x, y, color);
             } else {
-                hagl_fill_rectangle(backend, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
+                hagl_fill_rectangle(surface, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
             }
         }
     }

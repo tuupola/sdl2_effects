@@ -84,12 +84,12 @@ void metaballs_animate()
 }
 
 /* http://www.geisswerks.com/ryan/BLOBS/blobs.html */
-void metaballs_render(hagl_backend_t *backend)
+void metaballs_render(hagl_surface_t *surface)
 {
-    color_t background = hagl_color(backend, 0, 0, 0);
-    color_t black = hagl_color(backend, 0, 0, 0);
-    color_t white = hagl_color(backend, 255, 255, 255);
-    color_t green = hagl_color(backend, 0, 255, 0);
+    color_t background = hagl_color(surface, 0, 0, 0);
+    color_t black = hagl_color(surface, 0, 0, 0);
+    color_t white = hagl_color(surface, 255, 255, 255);
+    color_t green = hagl_color(surface, 0, 255, 0);
     color_t color;
 
     for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
@@ -114,9 +114,9 @@ void metaballs_render(hagl_backend_t *backend)
             }
 
             if (1 == PIXEL_SIZE) {
-                hagl_put_pixel(backend, x, y, color);
+                hagl_put_pixel(surface, x, y, color);
             } else {
-                hagl_fill_rectangle(backend, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
+                hagl_fill_rectangle(surface, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
             }
         }
     }

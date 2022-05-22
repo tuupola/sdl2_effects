@@ -68,7 +68,8 @@ int main()
     SDL_TimerID fps_id;
 
     srand(time(0));
-    hagl_backend_t *backend = hagl_init();
+    hagl_backend_t *backend = hagl_hal_init();
+    hagl_surface_t *surface = hagl_init(backend);
 
     fps_id = SDL_AddTimer(stats_delay, stats_callback, &stats);
 
@@ -82,23 +83,23 @@ int main()
         switch(effect) {
         case 0:
             rgbplasma_animate();
-            rgbplasma_render(backend);
+            rgbplasma_render(surface);
             break;
         case 1:
             metaballs_animate();
-            metaballs_render(backend);
+            metaballs_render(surface);
             break;
         case 2:
             plasma_animate();
-            plasma_render(backend);
+            plasma_render(surface);
             break;
         case 3:
             rotozoom_animate();
-            rotozoom_render(backend);
+            rotozoom_render(surface);
             break;
         case 4:
             deform_animate();
-            deform_render(backend);
+            deform_render(surface);
             break;
         }
 
@@ -123,7 +124,7 @@ int main()
                     quit = true;
                 } else {
 
-                    hagl_clear_screen(backend);
+                    hagl_clear_screen(surface);
 
                     switch(effect) {
                     case 0:
@@ -153,7 +154,7 @@ int main()
                         metaballs_init();
                         break;
                     case 2:
-                        plasma_init();
+                        plasma_init(surface);
                         break;
                     case 3:
                         rotozoom_init();

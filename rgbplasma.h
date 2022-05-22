@@ -24,5 +24,4 @@ SOFTWARE.
 SPDX-License-Identifier: MIT-0
 
 */
-void rgbplasma_animate();
-void rgbplasma_render();
+void rgbplasma_render(hagl_surface_t *surface);
