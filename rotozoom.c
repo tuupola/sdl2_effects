@@ -47,7 +47,7 @@ void rotozoom_init()
     // }
 }
 
-void rotozoom_render(hagl_surface_t *surface)
+void rotozoom_render(const hagl_backend_t *display)
 {
     float s, c, z;
 
@@ -70,7 +70,7 @@ void rotozoom_render(hagl_surface_t *surface)
             }
             color_t *color = (color_t*) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
 
-            hagl_put_pixel(surface, x, y, *color);
+            hagl_put_pixel(display, x, y, *color);
         }
     }
 }
