@@ -86,10 +86,10 @@ void metaballs_animate()
 /* http://www.geisswerks.com/ryan/BLOBS/blobs.html */
 void metaballs_render(const hagl_backend_t *display)
 {
-    color_t background = hagl_color(display, 0, 0, 0);
-    color_t black = hagl_color(display, 0, 0, 0);
-    color_t white = hagl_color(display, 255, 255, 255);
-    color_t green = hagl_color(display, 0, 255, 0);
+    color_t background = hagl_color(0, 0, 0);
+    color_t black = hagl_color(0, 0, 0);
+    color_t white = hagl_color(255, 255, 255);
+    color_t green = hagl_color(0, 255, 0);
     color_t color;
 
     for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {

@@ -42,7 +42,7 @@ void rgbplasma_render(const hagl_backend_t *display)
                 uint8_t v2 = 128 + (128 * sin((y + frame) / 24.0));
                 uint8_t v3 = 128 + (128 * sin(sqrt((x * x) + y * y) / 12.0));
                 uint8_t v = (v1 + v2 + v3) / 3;
-                color_t color = hagl_color(display, v, 255 - v, 128);
+                color_t color = hagl_color(v, 255 - v, 128);
                 hagl_put_pixel(display, x, y, color);
         }
     }

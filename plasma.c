@@ -50,7 +50,7 @@ void plasma_init(const hagl_backend_t *display)
         r = 128.0 + 128.0 * sin((M_PI * i / 128.0) + 1);
         g = 128.0 + 128.0 * sin((M_PI * i / 64.0) + 1);
         b = 64;
-        palette[i] = hagl_color(display, r, g, b);
+        palette[i] = hagl_color(r, g, b);
     }
 
     for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
