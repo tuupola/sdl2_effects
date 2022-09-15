@@ -169,6 +169,7 @@ int main()
                         break;
                     }
 
+                    fps_reset(&fps);
                     aps_reset(&bps);
 
                 }
