@@ -129,7 +129,7 @@ int main()
                     quit = true;
                 } else {
 
-                    hagl_clear_screen(display);
+                    hagl_clear(display);
 
                     switch(effect) {
                     case 0:
