@@ -40,6 +40,9 @@ SPDX-License-Identifier: MIT-0
 #include "rotozoom.h"
 #include "deform.h"
 
+static fps_instance_t fps;
+static aps_instance_t bps;
+
 typedef struct stats {
     float fps;
     float bps;
@@ -60,7 +63,7 @@ uint32_t stats_callback(uint32_t interval, void *param)
 int main()
 {
     uint32_t stats_delay = 2000; /* 0.5 fps */
-    uint8_t effect = 0;
+    uint8_t effect = 3;
     size_t bytes = 0;
     bool quit = false;
 
@@ -68,12 +71,15 @@ int main()
     SDL_TimerID fps_id;
 
     srand(time(0));
-    hagl_init();
+    hagl_backend_t *display = hagl_init();
 
     fps_id = SDL_AddTimer(stats_delay, stats_callback, &stats);
 
     printf("\nPress space for next demo.\n");
     printf("Press ESC to quit.\n\n");
+
+    fps_init(&fps);
+    aps_init(&bps);
 
     while (!quit) {
 
@@ -82,27 +88,27 @@ int main()
         switch(effect) {
         case 0:
             rgbplasma_animate();
-            rgbplasma_render();
+            rgbplasma_render(display);
             break;
         case 1:
             metaballs_animate();
-            metaballs_render();
+            metaballs_render(display);
             break;
         case 2:
             plasma_animate();
-            plasma_render();
+            plasma_render(display);
             break;
         case 3:
             rotozoom_animate();
-            rotozoom_render();
+            rotozoom_render(display);
             break;
         case 4:
             deform_animate();
-            deform_render();
+            deform_render(display);
             break;
         }
 
-        bytes = hagl_flush();
+        bytes = hagl_flush(display);
 
         uint32_t end = SDL_GetTicks();
         int32_t delay = MS_PER_FRAME_100_FPS - (end - start);
@@ -111,8 +117,8 @@ int main()
             SDL_Delay(delay);
         }
 
-        stats.bps = aps(bytes);
-        stats.fps = fps();
+        stats.bps = aps_update(&bps, bytes);
+        stats.fps = fps_update(&fps);
 
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -123,7 +129,7 @@ int main()
                     quit = true;
                 } else {
 
-                    hagl_clear_screen();
+                    hagl_clear(display);
 
                     switch(effect) {
                     case 0:
@@ -153,7 +159,7 @@ int main()
                         metaballs_init();
                         break;
                     case 2:
-                        plasma_init();
+                        plasma_init(display);
                         break;
                     case 3:
                         rotozoom_init();
@@ -163,7 +169,8 @@ int main()
                         break;
                     }
 
-                    aps(APS_RESET);
+                    fps_reset(&fps);
+                    aps_reset(&bps);
 
                 }
             }
@@ -171,7 +178,7 @@ int main()
     }
 
     SDL_RemoveTimer(fps_id);
-    hagl_close();
+    hagl_close(display);
 
     return 0;
 }
