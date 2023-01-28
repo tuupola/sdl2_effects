@@ -39,7 +39,8 @@ uint8_t *plasma;
 static const uint8_t SPEED = 4;
 static const uint8_t PIXEL_SIZE = 1;
 
-void plasma_init(const hagl_backend_t *display)
+void
+plasma_init(const hagl_backend_t *display)
 {
     uint8_t *ptr = plasma = malloc(display->width * display->height * sizeof(uint8_t));
     palette = malloc(256 * sizeof(color_t));
@@ -55,19 +56,20 @@ void plasma_init(const hagl_backend_t *display)
 
     for (uint16_t y = 0; y < display->height; y += PIXEL_SIZE) {
         for (uint16_t x = 0; x < display->width; x += PIXEL_SIZE) {
-                /* Generate three different sinusoids. */
-                float v1 = 128.0 + (128.0 * sin(x / 32.0));
-                float v2 = 128.0 + (128.0 * sin(y / 24.0));
-                float v3 = 128.0 + (128.0 * sin(sqrt(x * x + y * y) / 24.0));
-                /* Calculate average of the three sinusoids */
-                /* and use it as color index. */
-                uint8_t color = (v1 + v2 + v3) / 3;
-                *(ptr++) = color;
+            /* Generate three different sinusoids. */
+            float v1 = 128.0 + (128.0 * sin(x / 32.0));
+            float v2 = 128.0 + (128.0 * sin(y / 24.0));
+            float v3 = 128.0 + (128.0 * sin(sqrt(x * x + y * y) / 24.0));
+            /* Calculate average of the three sinusoids */
+            /* and use it as color index. */
+            uint8_t color = (v1 + v2 + v3) / 3;
+            *(ptr++) = color;
         }
     }
 }
 
-void plasma_render(const hagl_backend_t *display)
+void
+plasma_render(const hagl_backend_t *display)
 {
     uint8_t *ptr = plasma;
 
@@ -86,23 +88,25 @@ void plasma_render(const hagl_backend_t *display)
     }
 }
 
-void plasma_animate(const hagl_backend_t *display)
+void
+plasma_animate(const hagl_backend_t *display)
 {
     uint8_t *ptr = plasma;
 
     for (uint16_t y = 0; y < display->height; y = y + PIXEL_SIZE) {
         for (uint16_t x = 0; x < display->width; x = x + PIXEL_SIZE) {
-                /* Get a pixel from the plasma buffer. */
-                uint8_t index = *ptr;
-                /* Choose next color from the palette. */
-                index = (index + SPEED) % 256;
-                /* Put a pixel to the plasma buffer. */
-                *(ptr++) = index;
+            /* Get a pixel from the plasma buffer. */
+            uint8_t index = *ptr;
+            /* Choose next color from the palette. */
+            index = (index + SPEED) % 256;
+            /* Put a pixel to the plasma buffer. */
+            *(ptr++) = index;
         }
     }
 }
 
-void plasma_close()
+void
+plasma_close()
 {
     free(plasma);
     free(palette);

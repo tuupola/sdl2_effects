@@ -34,21 +34,23 @@ SPDX-License-Identifier: MIT-0
 static const uint8_t PLASMA_SPEED = 4;
 static uint32_t frame;
 
-void rgbplasma_render(const hagl_backend_t *display)
+void
+rgbplasma_render(const hagl_backend_t *display)
 {
     for (uint16_t x = 0; x < display->width; x++) {
         for (uint16_t y = 0; y < display->height; y++) {
-                uint8_t v1 = 128 + (128 * sin((x + frame) / 32.0));
-                uint8_t v2 = 128 + (128 * sin((y + frame) / 24.0));
-                uint8_t v3 = 128 + (128 * sin(sqrt((x * x) + y * y) / 12.0));
-                uint8_t v = (v1 + v2 + v3) / 3;
-                color_t color = hagl_color(display, v, 255 - v, 128);
-                hagl_put_pixel(display, x, y, color);
+            uint8_t v1 = 128 + (128 * sin((x + frame) / 32.0));
+            uint8_t v2 = 128 + (128 * sin((y + frame) / 24.0));
+            uint8_t v3 = 128 + (128 * sin(sqrt((x * x) + y * y) / 12.0));
+            uint8_t v = (v1 + v2 + v3) / 3;
+            color_t color = hagl_color(display, v, 255 - v, 128);
+            hagl_put_pixel(display, x, y, color);
         }
     }
 }
 
-void rgbplasma_animate()
+void
+rgbplasma_animate()
 {
     frame = frame + PLASMA_SPEED;
 }

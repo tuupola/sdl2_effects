@@ -52,7 +52,8 @@ static stats_t stats;
 
 static const uint64_t MS_PER_FRAME_100_FPS = 1000 / 100;
 
-uint32_t stats_callback(uint32_t interval, void *param)
+uint32_t
+stats_callback(uint32_t interval, void *param)
 {
     stats_t *data = (stats_t *)param;
     printf("%.*f fps / %.*f kBps\n", 1, data->fps, 1, data->bps / 1000);
@@ -60,7 +61,8 @@ uint32_t stats_callback(uint32_t interval, void *param)
     return interval;
 }
 
-int main()
+int
+main()
 {
     uint32_t stats_delay = 2000; /* 0.5 fps */
     uint8_t effect = 3;
@@ -86,26 +88,26 @@ int main()
         uint32_t start = SDL_GetTicks();
 
         switch(effect) {
-        case 0:
-            rgbplasma_animate();
-            rgbplasma_render(display);
-            break;
-        case 1:
-            metaballs_animate(display);
-            metaballs_render(display);
-            break;
-        case 2:
-            plasma_animate(display);
-            plasma_render(display);
-            break;
-        case 3:
-            rotozoom_animate();
-            rotozoom_render(display);
-            break;
-        case 4:
-            deform_animate();
-            deform_render(display);
-            break;
+            case 0:
+                rgbplasma_animate();
+                rgbplasma_render(display);
+                break;
+            case 1:
+                metaballs_animate(display);
+                metaballs_render(display);
+                break;
+            case 2:
+                plasma_animate(display);
+                plasma_render(display);
+                break;
+            case 3:
+                rotozoom_animate();
+                rotozoom_render(display);
+                break;
+            case 4:
+                deform_animate();
+                deform_render(display);
+                break;
         }
 
         bytes = hagl_flush(display);
@@ -125,48 +127,48 @@ int main()
                 quit = true;
             }
             if (event.type == SDL_KEYDOWN) {
-                if (SDLK_ESCAPE ==event.key.keysym.sym) {
+                if (SDLK_ESCAPE == event.key.keysym.sym) {
                     quit = true;
                 } else {
 
                     hagl_clear(display);
 
                     switch(effect) {
-                    case 0:
-                        //rgbplasma_close();
-                        break;
-                    case 1:
-                        //metaballs_close();
-                        break;
-                    case 2:
-                        plasma_close();
-                        break;
-                    case 3:
-                        //rotozoom_close();
-                        break;
-                    case 4:
-                        deform_close();
-                        break;
+                        case 0:
+                            //rgbplasma_close();
+                            break;
+                        case 1:
+                            //metaballs_close();
+                            break;
+                        case 2:
+                            plasma_close();
+                            break;
+                        case 3:
+                            //rotozoom_close();
+                            break;
+                        case 4:
+                            deform_close();
+                            break;
                     }
 
                     effect = (effect + 1) % 5;
 
                     switch(effect) {
-                    case 0:
-                        //rgbplasma_init();
-                        break;
-                    case 1:
-                        metaballs_init(display);
-                        break;
-                    case 2:
-                        plasma_init(display);
-                        break;
-                    case 3:
-                        rotozoom_init();
-                        break;
-                    case 4:
-                        deform_init(display);
-                        break;
+                        case 0:
+                            //rgbplasma_init();
+                            break;
+                        case 1:
+                            metaballs_init(display);
+                            break;
+                        case 2:
+                            plasma_init(display);
+                            break;
+                        case 3:
+                            rotozoom_init();
+                            break;
+                        case 4:
+                            deform_init(display);
+                            break;
                     }
 
                     fps_reset(&fps);
