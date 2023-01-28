@@ -91,11 +91,11 @@ int main()
             rgbplasma_render(display);
             break;
         case 1:
-            metaballs_animate();
+            metaballs_animate(display);
             metaballs_render(display);
             break;
         case 2:
-            plasma_animate();
+            plasma_animate(display);
             plasma_render(display);
             break;
         case 3:
@@ -156,7 +156,7 @@ int main()
                         //rgbplasma_init();
                         break;
                     case 1:
-                        metaballs_init();
+                        metaballs_init(display);
                         break;
                     case 2:
                         plasma_init(display);
@@ -165,7 +165,7 @@ int main()
                         rotozoom_init();
                         break;
                     case 4:
-                        deform_init();
+                        deform_init(display);
                         break;
                     }
 

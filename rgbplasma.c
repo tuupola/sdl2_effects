@@ -36,8 +36,8 @@ static uint32_t frame;
 
 void rgbplasma_render(const hagl_backend_t *display)
 {
-    for (uint16_t x = 0; x < DISPLAY_WIDTH; x++) {
-        for (uint16_t y = 0; y < DISPLAY_HEIGHT; y++) {
+    for (uint16_t x = 0; x < display->width; x++) {
+        for (uint16_t y = 0; y < display->height; y++) {
                 uint8_t v1 = 128 + (128 * sin((x + frame) / 32.0));
                 uint8_t v2 = 128 + (128 * sin((y + frame) / 24.0));
                 uint8_t v3 = 128 + (128 * sin(sqrt((x * x) + y * y) / 12.0));
