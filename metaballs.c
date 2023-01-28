@@ -2,7 +2,7 @@
 
 MIT No Attribution
 
-Copyright (c) 2020-2022 Mika Tuupola
+Copyright (c) 2020-2023 Mika Tuupola
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,8 @@ static const uint8_t MIN_RADIUS = 20;
 static const uint8_t MAX_RADIUS = 30;
 static const uint8_t PIXEL_SIZE = 1;
 
-void metaballs_init(const hagl_backend_t *display)
+void
+metaballs_init(const hagl_backend_t *display)
 {
     /* Set up imaginary balls inside screen coordinates. */
     for (int16_t i = 0; i < NUM_BALLS; i++) {
@@ -65,7 +66,8 @@ void metaballs_init(const hagl_backend_t *display)
     }
 }
 
-void metaballs_animate(const hagl_backend_t *display)
+void
+metaballs_animate(const hagl_backend_t *display)
 {
     for (int16_t i = 0; i < NUM_BALLS; i++) {
         balls[i].position.x += balls[i].velocity.x;
@@ -84,7 +86,8 @@ void metaballs_animate(const hagl_backend_t *display)
 }
 
 /* http://www.geisswerks.com/ryan/BLOBS/blobs.html */
-void metaballs_render(const hagl_backend_t *display)
+void
+metaballs_render(const hagl_backend_t *display)
 {
     color_t background = hagl_color(display, 0, 0, 0);
     color_t black = hagl_color(display, 0, 0, 0);

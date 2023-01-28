@@ -2,7 +2,7 @@
 
 MIT No Attribution
 
-Copyright (c) 2020-2022 Mika Tuupola
+Copyright (c) 2020-2023 Mika Tuupola
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,8 @@ static uint16_t angle;
 // static float sinlut[360];
 // static float coslut[360];
 
-void rotozoom_init()
+void
+rotozoom_init()
 {
     /* Generate look up tables. */
     // for (uint16_t i = 0; i < 360; i++) {
@@ -47,7 +48,8 @@ void rotozoom_init()
     // }
 }
 
-void rotozoom_render(const hagl_backend_t *display)
+void
+rotozoom_render(const hagl_backend_t *display)
 {
     float s, c, z;
 
@@ -68,14 +70,15 @@ void rotozoom_render(const hagl_backend_t *display)
             if (v < 0) {
                 v += HEAD_HEIGHT;
             }
-            color_t *color = (color_t*) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
+            color_t *color = (color_t *) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
 
             hagl_put_pixel(display, x, y, *color);
         }
     }
 }
 
-void rotozoom_animate()
+void
+rotozoom_animate()
 {
     angle = (angle + SPEED) % 360;
 }
