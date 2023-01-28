@@ -41,7 +41,7 @@ static const uint8_t PIXEL_SIZE = 1;
 
 void plasma_init(const hagl_backend_t *display)
 {
-    uint8_t *ptr = plasma = malloc(DISPLAY_WIDTH * DISPLAY_HEIGHT * sizeof(uint8_t));
+    uint8_t *ptr = plasma = malloc(display->width * display->height * sizeof(uint8_t));
     palette = malloc(256 * sizeof(color_t));
 
     /* Generate nice continous palette. */
@@ -53,8 +53,8 @@ void plasma_init(const hagl_backend_t *display)
         palette[i] = hagl_color(display, r, g, b);
     }
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y += PIXEL_SIZE) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x += PIXEL_SIZE) {
+    for (uint16_t y = 0; y < display->height; y += PIXEL_SIZE) {
+        for (uint16_t x = 0; x < display->width; x += PIXEL_SIZE) {
                 /* Generate three different sinusoids. */
                 float v1 = 128.0 + (128.0 * sin(x / 32.0));
                 float v2 = 128.0 + (128.0 * sin(y / 24.0));
@@ -71,8 +71,8 @@ void plasma_render(const hagl_backend_t *display)
 {
     uint8_t *ptr = plasma;
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + PIXEL_SIZE) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + PIXEL_SIZE) {
+    for (uint16_t y = 0; y < display->height; y = y + PIXEL_SIZE) {
+        for (uint16_t x = 0; x < display->width; x = x + PIXEL_SIZE) {
             /* Get a color for pixel from the plasma buffer. */
             uint8_t index = *(ptr++);
             color_t color = palette[index];
@@ -86,12 +86,12 @@ void plasma_render(const hagl_backend_t *display)
     }
 }
 
-void plasma_animate()
+void plasma_animate(const hagl_backend_t *display)
 {
     uint8_t *ptr = plasma;
 
-    for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + PIXEL_SIZE) {
-        for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + PIXEL_SIZE) {
+    for (uint16_t y = 0; y < display->height; y = y + PIXEL_SIZE) {
+        for (uint16_t x = 0; x < display->width; x = x + PIXEL_SIZE) {
                 /* Get a pixel from the plasma buffer. */
                 uint8_t index = *ptr;
                 /* Choose next color from the palette. */
