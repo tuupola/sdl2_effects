@@ -89,11 +89,11 @@ metaballs_animate(const hagl_backend_t *display)
 void
 metaballs_render(const hagl_backend_t *display)
 {
-    color_t background = hagl_color(display, 0, 0, 0);
-    color_t black = hagl_color(display, 0, 0, 0);
-    color_t white = hagl_color(display, 255, 255, 255);
-    color_t green = hagl_color(display, 0, 255, 0);
-    color_t color;
+    hagl_color_t background = hagl_color(display, 0, 0, 0);
+    hagl_color_t black = hagl_color(display, 0, 0, 0);
+    hagl_color_t white = hagl_color(display, 255, 255, 255);
+    hagl_color_t green = hagl_color(display, 0, 255, 0);
+    hagl_color_t color;
 
     for (uint16_t y = 0; y < display->height; y += PIXEL_SIZE) {
         for (uint16_t x = 0; x < display->width; x += PIXEL_SIZE) {
