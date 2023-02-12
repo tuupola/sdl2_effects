@@ -70,7 +70,7 @@ rotozoom_render(const hagl_backend_t *display)
             if (v < 0) {
                 v += HEAD_HEIGHT;
             }
-            color_t *color = (color_t *) (head + HEAD_WIDTH * sizeof(color_t) * v + sizeof(color_t) * u);
+            hagl_color_t *color = (hagl_color_t *) (head + HEAD_WIDTH * sizeof(hagl_color_t) * v + sizeof(hagl_color_t) * u);
 
             hagl_put_pixel(display, x, y, *color);
         }
