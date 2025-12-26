@@ -13,8 +13,7 @@ $ sudo apt-get install libsdl2-dev # Debian based distros
 ```
 $ git clone https://github.com/tuupola/sdl2_effects.git --recursive
 $ cd sdl2_effects
-$ make clean && make
-$ ./demo
+$ make clean && make run
 ```
 
 ## Run on ESP32

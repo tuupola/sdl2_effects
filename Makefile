@@ -9,10 +9,17 @@ src = $(wildcard *.c) \
 
 obj = $(src:.c=.o)
 
-demo: $(obj)
+TARGET = demo
+
+all: $(TARGET)
+
+clean:
+	rm -f $(obj) $(TARGET)
+
+$(TARGET): $(obj)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) $(SDLFLAGS)
 
+run: $(TARGET)
+	./$(TARGET)
 
-.PHONY: clean
-clean:
-	rm -f $(obj) demo
+.PHONY: all clean run
