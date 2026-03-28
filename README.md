@@ -7,7 +7,7 @@ Created to test the [HAGL graphics library](https://github.com/tuupola/hagl). Yo
 ```
 $ brew install sdl2 # macOs
 $ sudo dnf install SDL2-devel # Fedora, Rocky etc
-$ sudo apt-get install libsdl2-dev # Debian based distros
+$ sudo apt install libsdl2-dev # Debian, Ubuntu etc
 ```
 
 ```
