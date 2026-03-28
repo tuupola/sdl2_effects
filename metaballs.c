@@ -25,9 +25,9 @@ SPDX-License-Identifier: MIT-0
 
 */
 
+#include <hagl.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <hagl.h>
 
 #include "metaballs.h"
 
@@ -52,9 +52,7 @@ static const uint8_t MIN_RADIUS = 20;
 static const uint8_t MAX_RADIUS = 30;
 static const uint8_t PIXEL_SIZE = 1;
 
-void
-metaballs_init(const hagl_backend_t *display)
-{
+void metaballs_init(const hagl_backend_t *display) {
     /* Set up imaginary balls inside screen coordinates. */
     for (int16_t i = 0; i < NUM_BALLS; i++) {
         balls[i].radius = (rand() % MAX_RADIUS) + MIN_RADIUS;
@@ -66,9 +64,7 @@ metaballs_init(const hagl_backend_t *display)
     }
 }
 
-void
-metaballs_animate(const hagl_backend_t *display)
-{
+void metaballs_animate(const hagl_backend_t *display) {
     for (int16_t i = 0; i < NUM_BALLS; i++) {
         balls[i].position.x += balls[i].velocity.x;
         balls[i].position.y += balls[i].velocity.y;
@@ -86,9 +82,7 @@ metaballs_animate(const hagl_backend_t *display)
 }
 
 /* http://www.geisswerks.com/ryan/BLOBS/blobs.html */
-void
-metaballs_render(const hagl_backend_t *display)
-{
+void metaballs_render(const hagl_backend_t *display) {
     hagl_color_t background = hagl_color(display, 0, 0, 0);
     hagl_color_t black = hagl_color(display, 0, 0, 0);
     hagl_color_t white = hagl_color(display, 255, 255, 255);

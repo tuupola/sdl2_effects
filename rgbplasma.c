@@ -25,18 +25,16 @@ SPDX-License-Identifier: MIT-0
 
 */
 
-#include <stdint.h>
-#include <math.h>
 #include <hagl.h>
+#include <math.h>
+#include <stdint.h>
 
 #include "rgbplasma.h"
 
 static const uint8_t PLASMA_SPEED = 4;
 static uint32_t frame;
 
-void
-rgbplasma_render(const hagl_backend_t *display)
-{
+void rgbplasma_render(const hagl_backend_t *display) {
     for (uint16_t x = 0; x < display->width; x++) {
         for (uint16_t y = 0; y < display->height; y++) {
             uint8_t v1 = 128 + (128 * sin((x + frame) / 32.0));
@@ -49,8 +47,6 @@ rgbplasma_render(const hagl_backend_t *display)
     }
 }
 
-void
-rgbplasma_animate()
-{
+void rgbplasma_animate() {
     frame = frame + PLASMA_SPEED;
 }

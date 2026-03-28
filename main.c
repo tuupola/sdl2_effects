@@ -24,21 +24,21 @@ SOFTWARE.
 SPDX-License-Identifier: MIT-0
 
 */
+#include <SDL2/SDL.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
 
-#include <hagl.h>
-#include <hagl_hal.h>
 #include <aps.h>
 #include <fps.h>
+#include <hagl.h>
+#include <hagl_hal.h>
 
+#include "deform.h"
 #include "metaballs.h"
 #include "plasma.h"
 #include "rgbplasma.h"
 #include "rotozoom.h"
-#include "deform.h"
 
 static fps_instance_t fps;
 static aps_instance_t bps;
@@ -52,18 +52,14 @@ static stats_t stats;
 
 static const uint64_t MS_PER_FRAME_100_FPS = 1000 / 100;
 
-uint32_t
-stats_callback(uint32_t interval, void *param)
-{
+uint32_t stats_callback(uint32_t interval, void *param) {
     stats_t *data = (stats_t *)param;
     printf("%.*f fps / %.*f kBps\n", 1, data->fps, 1, data->bps / 1000);
 
     return interval;
 }
 
-int
-main()
-{
+int main() {
     uint32_t stats_delay = 2000; /* 0.5 fps */
     uint8_t effect = 3;
     size_t bytes = 0;
@@ -87,7 +83,7 @@ main()
 
         uint32_t start = SDL_GetTicks();
 
-        switch(effect) {
+        switch (effect) {
             case 0:
                 rgbplasma_animate();
                 rgbplasma_render(display);
@@ -133,7 +129,7 @@ main()
 
                     hagl_clear(display);
 
-                    switch(effect) {
+                    switch (effect) {
                         case 0:
                             //rgbplasma_close();
                             break;
@@ -153,7 +149,7 @@ main()
 
                     effect = (effect + 1) % 5;
 
-                    switch(effect) {
+                    switch (effect) {
                         case 0:
                             //rgbplasma_init();
                             break;
@@ -173,7 +169,6 @@ main()
 
                     fps_reset(&fps);
                     aps_reset(&bps);
-
                 }
             }
         }

@@ -25,11 +25,11 @@ SPDX-License-Identifier: MIT-0
 
 */
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <math.h>
 #include <hagl.h>
 #include <hagl_hal_color.h>
+#include <math.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 #include "plasma.h"
 
@@ -39,14 +39,12 @@ uint8_t *plasma;
 static const uint8_t SPEED = 4;
 static const uint8_t PIXEL_SIZE = 1;
 
-void
-plasma_init(const hagl_backend_t *display)
-{
+void plasma_init(const hagl_backend_t *display) {
     uint8_t *ptr = plasma = malloc(display->width * display->height * sizeof(uint8_t));
     palette = malloc(256 * sizeof(hagl_color_t));
 
     /* Generate nice continous palette. */
-    for(int i = 0; i < 256; i++) {
+    for (int i = 0; i < 256; i++) {
         uint8_t r, g, b;
         r = 128.0 + 128.0 * sin((M_PI * i / 128.0) + 1);
         g = 128.0 + 128.0 * sin((M_PI * i / 64.0) + 1);
@@ -68,9 +66,7 @@ plasma_init(const hagl_backend_t *display)
     }
 }
 
-void
-plasma_render(const hagl_backend_t *display)
-{
+void plasma_render(const hagl_backend_t *display) {
     uint8_t *ptr = plasma;
 
     for (uint16_t y = 0; y < display->height; y = y + PIXEL_SIZE) {
@@ -88,9 +84,7 @@ plasma_render(const hagl_backend_t *display)
     }
 }
 
-void
-plasma_animate(const hagl_backend_t *display)
-{
+void plasma_animate(const hagl_backend_t *display) {
     uint8_t *ptr = plasma;
 
     for (uint16_t y = 0; y < display->height; y = y + PIXEL_SIZE) {
@@ -105,9 +99,7 @@ plasma_animate(const hagl_backend_t *display)
     }
 }
 
-void
-plasma_close()
-{
+void plasma_close() {
     free(plasma);
     free(palette);
 }
