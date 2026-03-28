@@ -2,7 +2,7 @@
 
 MIT No Attribution
 
-Copyright (c) 2020-2023 Mika Tuupola
+Copyright (c) 2020-2026 Mika Tuupola
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,7 @@ void rotozoom_init() {
 
 void rotozoom_render(const hagl_backend_t *display) {
     float s, c, z;
+    size_t cs = sizeof(hagl_color_t);
 
     s = sin(angle * M_PI / 180);
     c = cos(angle * M_PI / 180);
@@ -66,7 +67,7 @@ void rotozoom_render(const hagl_backend_t *display) {
             if (v < 0) {
                 v += HEAD_HEIGHT;
             }
-            hagl_color_t *color = (hagl_color_t *)(head + HEAD_WIDTH * sizeof(hagl_color_t) * v + sizeof(hagl_color_t) * u);
+            hagl_color_t *color = (hagl_color_t *)(head + HEAD_WIDTH * cs * v + cs * u);
 
             hagl_put_pixel(display, x, y, *color);
         }

@@ -113,7 +113,9 @@ void metaballs_render(const hagl_backend_t *display) {
             if (1 == PIXEL_SIZE) {
                 hagl_put_pixel(display, x, y, color);
             } else {
-                hagl_fill_rectangle(display, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color);
+                hagl_fill_rectangle(
+                    display, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, color
+                );
             }
         }
     }

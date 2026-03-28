@@ -108,12 +108,16 @@ void deform_render(hagl_backend_t *display) {
             v = abs(v) % HEAD_HEIGHT;
 
             /* Get the pixel from texture and put it to the screen. */
-            hagl_color_t *color = (hagl_color_t *)(head + HEAD_WIDTH * sizeof(hagl_color_t) * v + sizeof(hagl_color_t) * u);
+            hagl_color_t *color =
+                (hagl_color_t *)(head + HEAD_WIDTH * sizeof(hagl_color_t) * v +
+                                 sizeof(hagl_color_t) * u);
 
             if (1 == PIXEL_SIZE) {
                 hagl_put_pixel(display, x, y, *color);
             } else {
-                hagl_fill_rectangle(display, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, *color);
+                hagl_fill_rectangle(
+                    display, x, y, x + PIXEL_SIZE - 1, y + PIXEL_SIZE - 1, *color
+                );
             }
         }
     }

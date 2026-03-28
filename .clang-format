@@ -1,7 +1,7 @@
 ---
 Language: Cpp
 
-ColumnLimit: 0
+ColumnLimit: 90
 
 # Indentation
 IndentWidth: 4
@@ -58,7 +58,7 @@ AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 
 # Packing
-BinPackArguments: true
+BinPackArguments: false
 BinPackParameters: true
 
 # Line breaking
